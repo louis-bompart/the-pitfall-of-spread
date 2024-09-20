@@ -30,10 +30,12 @@ This means that, when copy an object containing `getter` properties, those are e
 
 ## Solution
 
-Instead of copying value, we need to copy property descriptors. ECMAScript comes with various methods to manipulate those:
-* [`Object.getOwnPropertyDescriptor`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor): returns the Property Descriptor is like a Property, minus the `name`, which has been used/defined as the key given in the second parameter of the function.
-* [`Object.getOwnPropertyDescriptors`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptors): returns an object akin to a map between the `name` of all Properties and their respective Property Descriptor.
-* [`Object.defineProperty`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty): Set a Property Descriptor on a given key on a given object, see it as the 'set' counterpart of `Object.getOwnPropertyDescriptor`
+Instead of copying value, we need to copy property descriptors.
+Property Descriptor can be considered a "subset" of Property, minus the `name`
+ECMAScript comes with various methods to manipulate those:
+* [`Object.getOwnPropertyDescriptor`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor): Returns the Property Descriptor of a given key
+* [`Object.getOwnPropertyDescriptors`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptors): Returns an object akin to a map between the `name` of all Properties and their respective Property Descriptor of a given object.
+* [`Object.defineProperty`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty): Set a Property Descriptor on a given key of a given object. See it as the 'set' counterpart of `Object.getOwnPropertyDescriptor`
 * [`Object.defineProperties`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperties): Assign all Property Descriptor of a given object, on another object, using the same keys.
 
 With the 2nd & 4th methods, we can craft a "spread for properties" like so:
@@ -54,5 +56,10 @@ console.log('original.counter, expecting 2, found:', original.counter);
 
     original.counter, expecting 0, found: 0
     copy.counter, expecting 1, found: 1
-    original.counter, expecting 3, found: 2
+    original.counter, expecting 2, found: 2
     
+
+
+```typescript
+
+```

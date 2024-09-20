@@ -7567,11 +7567,13 @@ copy.counter, expecting 2, but found: 0
 <h2 id="Problem">Problem<a class="anchor-link" href="#Problem">¶</a></h2><p>While <code>getter</code> looks like function, they are a <a href="https://developer.mozilla.org/en-US/docs/Glossary/Property/JavaScript">Property</a> without <code>value</code> and instead with a <code>get</code> implementation.
 Most read operation will use the <code>[[Get]]</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy#object_internal_methods">internal method</a> which will execute the <code>get</code> and use its return value as <code>value</code>.
 This means that, when copy an object containing <code>getter</code> properties, those are evaluated, and the result of the evaluation is then assigned in the spread object.</p>
-<h2 id="Solution">Solution<a class="anchor-link" href="#Solution">¶</a></h2><p>Instead of copying value, we need to copy property descriptors. ECMAScript comes with various methods to manipulate those:</p>
+<h2 id="Solution">Solution<a class="anchor-link" href="#Solution">¶</a></h2><p>Instead of copying value, we need to copy property descriptors.
+Property Descriptor can be considered a "subset" of Property, minus the <code>name</code>
+ECMAScript comes with various methods to manipulate those:</p>
 <ul>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor"><code>Object.getOwnPropertyDescriptor</code></a>: returns the Property Descriptor is like a Property, minus the <code>name</code>, which has been used/defined as the key given in the second parameter of the function.</li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptors"><code>Object.getOwnPropertyDescriptors</code></a>: returns an object akin to a map between the <code>name</code> of all Properties and their respective Property Descriptor.</li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty"><code>Object.defineProperty</code></a>: Set a Property Descriptor on a given key on a given object, see it as the 'set' counterpart of <code>Object.getOwnPropertyDescriptor</code></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor"><code>Object.getOwnPropertyDescriptor</code></a>: Returns the Property Descriptor of a given key</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptors"><code>Object.getOwnPropertyDescriptors</code></a>: Returns an object akin to a map between the <code>name</code> of all Properties and their respective Property Descriptor of a given object.</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty"><code>Object.defineProperty</code></a>: Set a Property Descriptor on a given key of a given object. See it as the 'set' counterpart of <code>Object.getOwnPropertyDescriptor</code></li>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperties"><code>Object.defineProperties</code></a>: Assign all Property Descriptor of a given object, on another object, using the same keys.</li>
 </ul>
 <p>With the 2nd &amp; 4th methods, we can craft a "spread for properties" like so:</p>
@@ -7583,7 +7585,7 @@ This means that, when copy an object containing <code>getter</code> properties, 
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-typescript"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="nx">counter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
@@ -7610,8 +7612,22 @@ This means that, when copy an object containing <code>getter</code> properties, 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>original.counter, expecting 0, found: 0
 copy.counter, expecting 1, found: 1
-original.counter, expecting 3, found: 2
+original.counter, expecting 2, found: 2
 </pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-typescript"><pre><span></span>
+</pre></div>
 </div>
 </div>
 </div>
